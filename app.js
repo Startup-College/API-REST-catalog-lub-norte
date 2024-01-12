@@ -1,12 +1,12 @@
 import fastify from "fastify";
-import exempleRoutes from "./src/routes/exempleRoutes.js";
 import cors from "@fastify/cors";
 import "dotenv/config";
+import productsRoutes from "./src/routes/ProductsRoutes.js";
 
 const app = fastify();
 
 // Register router with prefix
-app.register(exempleRoutes, { prefix: "/" });
+app.register(productsRoutes, { prefix: "/" });
 
 app.register(cors, { origin: "*" });
 
