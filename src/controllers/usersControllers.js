@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/database.js";
-import { generateToken } from "../middlewares/generateToken.js";
+import { authService } from "../middlewares/authService.js";
 import bcrypt from "bcrypt";
 
 export const usersControllers = {
@@ -58,7 +58,7 @@ export const usersControllers = {
         return reply.status(400).send({ message: "Senha incorreta!" });
       }
 
-      const token = await generateToken({ userId: user.id_user });
+      const token = await authService.generateToken({ id_user: user.id_user });
 
       user.password = undefined;
 

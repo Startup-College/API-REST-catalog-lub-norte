@@ -3,11 +3,12 @@ import fastify from "fastify";
 import cors from "@fastify/cors";
 
 import { usersRoutes } from "./src/routes/usersRoutes.js";
+import productsRoutes from "./src/routes/ProductsRoutes.js";
 
 const app = fastify();
 
-// Register router with prefix
 app.register(usersRoutes, { prefix: "/api/v1/users" });
+app.register(productsRoutes, { prefix: "/api/v1/products" });
 
 app.register(cors, { origin: "*" });
 
