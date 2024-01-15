@@ -17,6 +17,41 @@ const productsController = {
     }
 
   },
+
+  async create( request, reply) {
+
+   const {
+      name,
+		  API_ACAE,
+		  base,
+		  SAE,
+		  brand,
+		  description,
+		  liter,
+		  id_user,
+		  id_category
+     } = request.body
+
+    try {
+      const newProducts = await prisma.products.create({
+        data: {
+          name,
+          API_ACAE,
+          base,
+          SAE,
+          brand,
+          description,
+          liter,
+          id_user,
+          id_category
+        }
+      });
+
+      return reply.status(201).send(newProducts);
+    } catch (error) {
+      return reply.status(500).send(error.message);
+    }
+  }
 };
 
 export default productsController;

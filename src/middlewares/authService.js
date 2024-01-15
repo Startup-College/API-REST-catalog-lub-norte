@@ -41,7 +41,7 @@ export const authService = {
     }
   },
 
-  authenticateRequest: async (request, reply, done) => {
+  authenticateRequest: (request, reply, done) => {
     const token = request.headers.authorization?.replace(/^Bearer /, "");
 
     if (!token) {
@@ -49,7 +49,7 @@ export const authService = {
       return done();
     }
 
-    const user = await authService.verifyToken(token);
+    const user = authService.verifyToken(token);
 
     if (!user) {
       reply.status(404).send({ message: "Não autorizado: Token Inválido" });
