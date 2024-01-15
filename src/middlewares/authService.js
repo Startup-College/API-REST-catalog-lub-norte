@@ -21,19 +21,21 @@ export const authService = {
 
   verifyToken(token) {
     try {
+
       const decodedToken = JWT.verify(token, process.env.SECRET_KEY);
   
-      if (!decodedToken.id) {
+      if (!decodedToken.id_user) {
         throw new Error("ID do usuário não encontrado no token");
       }
   
       const user = prisma.users.findUnique({
         where: {
-          id_user: decodedToken.id,
+          id_user: decodedToken.id_user,
         },
       });
   
       return user;
+
     } catch (error) {
       return null;
     }

@@ -3,6 +3,7 @@ import { authService } from "../middlewares/authService.js";
 import bcrypt from "bcrypt";
 
 export const usersControllers = {
+
   async register(request, reply) {
     const { name, surname, email, password, CPF_CNPJ, birth_date } =
       request.body;
@@ -22,12 +23,12 @@ export const usersControllers = {
 
       const newUsers = await prisma.users.create({
         data: {
-          name: name,
-          surname: surname,
-          email: email,
+          name,
+          surname,
+          email,
           password: hashedPassword,
-          CPF_CNPJ: CPF_CNPJ,
-          birth_date: birth_date,
+          CPF_CNPJ,
+          birth_date,
         },
       });
 
@@ -49,13 +50,17 @@ export const usersControllers = {
       });
 
       if (!user) {
-        return reply.status(400).send({ message: "Email incorreto!" });
+        return reply.status(400).send({ 
+          message: "Verifique se as crendênciais informadas estão corretos!" 
+        });
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (!isPasswordValid) {
-        return reply.status(400).send({ message: "Senha incorreta!" });
+        return reply.status(400).send({ 
+          message: "Verifique se as crendênciais informadas estão corretos!" 
+        });
       }
 
       const token = await authService.generateToken({ id_user: user.id_user });
@@ -63,6 +68,7 @@ export const usersControllers = {
       user.password = undefined;
 
       return reply.status(200).send({ user, token });
+
     } catch (error) {
       console.log(error);
       return reply.status(500).send({ message: "Erro no Servidor" });
