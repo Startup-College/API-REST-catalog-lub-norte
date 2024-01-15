@@ -45,23 +45,16 @@ export const usersControllers = {
     try {
       const user = await prisma.users.findFirst({
         where: {
-          email: email,
+          email,
         },
       });
 
-      if (!user) {
-        return reply.status(400).send({ 
-          message: "Verifique se as crendênciais informadas estão corretos!" 
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        
+        return reply.status(400).send({
+            message: "Verifique se as credenciais informadas estão corretas!",
         });
-      }
-
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-
-      if (!isPasswordValid) {
-        return reply.status(400).send({ 
-          message: "Verifique se as crendênciais informadas estão corretos!" 
-        });
-      }
+    }
 
       const token = await authService.generateToken({ id_user: user.id_user });
 

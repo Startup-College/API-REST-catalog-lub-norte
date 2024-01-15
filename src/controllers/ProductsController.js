@@ -28,7 +28,6 @@ const productsController = {
 		  brand,
 		  description,
 		  liter,
-		  id_user,
 		  id_category
      } = request.body
 
@@ -42,7 +41,6 @@ const productsController = {
           brand,
           description,
           liter,
-          id_user,
           id_category
         }
       });
