@@ -1,12 +1,14 @@
+import "dotenv/config";
 import fastify from "fastify";
 import cors from "@fastify/cors";
-import "dotenv/config";
+
+import { usersRoutes } from "./src/routes/usersRoutes.js";
 import productsRoutes from "./src/routes/ProductsRoutes.js";
 
 const app = fastify();
 
-// Register router with prefix
-app.register(productsRoutes, { prefix: "/" });
+app.register(usersRoutes, { prefix: "/api/v1/users" });
+app.register(productsRoutes, { prefix: "/api/v1/products" });
 
 app.register(cors, { origin: "*" });
 
@@ -16,6 +18,6 @@ app.listen(
     if (err) {
       throw new Error(err);
     }
-    console.log(`server listening on http://localhost:3000`);
+    console.log(`server listening on http://localhost:${app.server.address().port}`);
   }
 );

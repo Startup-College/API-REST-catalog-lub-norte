@@ -23,7 +23,6 @@ CREATE TABLE "products" (
     "brand" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "liter" TEXT NOT NULL,
-    "id_user" TEXT NOT NULL,
     "id_category" TEXT NOT NULL,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id_product")
@@ -42,9 +41,6 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_CPF_CNPJ_key" ON "users"("CPF_CNPJ");
-
--- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "users"("id_user") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_id_category_fkey" FOREIGN KEY ("id_category") REFERENCES "categories"("id_category") ON DELETE RESTRICT ON UPDATE CASCADE;
