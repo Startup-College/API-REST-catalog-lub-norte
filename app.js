@@ -4,11 +4,13 @@ import cors from "@fastify/cors";
 
 import { usersRoutes } from "./src/routes/usersRoutes.js";
 import productsRoutes from "./src/routes/ProductsRoutes.js";
+import categoriesRoutes from "./src/routes/CategoriesRoutes.js";
 
 const app = fastify();
 
 app.register(usersRoutes, { prefix: "/api/v1/users" });
 app.register(productsRoutes, { prefix: "/api/v1/products" });
+app.register(categoriesRoutes, { prefix: "/api/v1/categories" })
 
 app.register(cors, { origin: "*" });
 
