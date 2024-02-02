@@ -3,9 +3,17 @@ import { prisma } from "../../lib/database.js";
 const productsController = {
 
   async index(request, reply) {
+    const queryParams = request.query;
+
     try {
 
-      const list = await prisma.products.findMany()
+
+      const API = queryParams.API;
+
+
+      const list = await prisma.products.findMany({
+        where: { API_ACAE: API },
+      });
 
 
       return reply.status(200).send(JSON.stringify(list));
@@ -18,18 +26,18 @@ const productsController = {
 
   },
 
-  async create( request, reply) {
+  async create(request, reply) {
 
-   const {
+    const {
       name,
-		  API_ACAE,
-		  base,
-		  SAE,
-		  brand,
-		  description,
-		  liter,
-		  id_category
-     } = request.body
+      API_ACAE,
+      base,
+      SAE,
+      brand,
+      description,
+      liter,
+      id_category
+    } = request.body
 
     try {
       const newProducts = await prisma.products.create({
